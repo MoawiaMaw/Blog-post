@@ -1,0 +1,17 @@
+{
+  "name": "codearena-blogpost-app",
+  "version": "1.0.0",
+  "description": "backend and apis to blogpost application",
+  "main": "app.js",
+  "scripts": {
+    "start": "SET NODE_ENV=production & node app",
+    "dev": "nodemon app"
+  },
+  "author": "Moawia Ahmed",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12"
+  }
+}
