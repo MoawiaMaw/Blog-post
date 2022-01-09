@@ -7,6 +7,7 @@ const {
     deleteBlog
 } = require('../controllers/blogs');
 const advanceResults = require('../middleware/advanceResults');
+const { protect } = require('../middleware/auth');
 const Blog = require('../models/Blog');
 
 //include other router resource
@@ -20,12 +21,12 @@ router.use('/:blogId/posts', postRouter);
 
 router.route('/')
     .get(advanceResults(Blog, { path: 'posts', select: 'title' }), getBlogs)        //get all blog posts
-    .post(createBlog)     //create blog post
+    .post(protect, createBlog)     //create blog post
 
 router.route('/:id')
     .get(getBlog)           //get a single blog post
-    .put(updateBlog)        // update blog
-    .delete(deleteBlog);    //delete blog
+    .put(protect, updateBlog)        // update blog
+    .delete(protect, deleteBlog);    //delete blog
 
 
 module.exports = router;

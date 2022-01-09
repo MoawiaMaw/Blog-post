@@ -15,6 +15,11 @@ const PostSchema = new mongoose.Schema({
         ref: 'Blog',
         required: true
     },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
