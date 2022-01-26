@@ -36,6 +36,14 @@ app.use('/api/posts', posts);
 const auth = require('./routes/auth');
 app.use('/api/auth', auth);
 
+//comments routes
+const comments = require('./routes/comments');
+app.use('/api/comments', comments);
+
+//reactions routes
+const reactions = require('./routes/reactions');
+app.use('/api/reactions', reactions);
+
 
 //error handler
 app.use(errorHandler)

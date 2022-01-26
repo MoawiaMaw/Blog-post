@@ -14,7 +14,9 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
         if (!blog) {
             return next(new ErrorResponse(`blog with id ${req.params.blogId} not found`, 404));
         }
-        const posts = await Post.find({ blog: req.params.blogId }).populate('blog');
+        const posts = await Post.find({ blog: req.params.blogId }).populate({ path: 'blog', select: 'name user' })
+            .populate({ path: 'comments', select: 'content user' })
+            .populate({ path: 'reactions', select: 'reaction user' });
         res.status(200).json({ success: true, count: posts.length, data: posts });
     } else {
         res.status(200).json(res.advanceResult);
@@ -25,7 +27,9 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
 //@route    GET /api/post/:id
 //@access   public
 exports.getPost = asyncHandler(async (req, res, next) => {
-    const post = await Post.findById(req.params.id).populate('blog');
+    const post = await Post.findById(req.params.id).populate({ path: 'blog', select: 'name user' })
+        .populate({ path: 'comments', select: 'content user' })
+        .populate({ path: 'reactions', select: 'reaction user' });
     if (!post) {
         return next(new ErrorResponse(`post with id ${req.params.id} not found`, 404));
     }

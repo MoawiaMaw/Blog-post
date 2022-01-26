@@ -5,7 +5,13 @@ const { protect } = require('../middleware/auth');
 
 const Post = require('../models/Post');
 
+const commentRouter = require('./comments');
+const reactionRouter = require('./reactions');
+
 const router = express.Router({ mergeParams: true });
+
+router.use('/:postId/comments', commentRouter);
+router.use('/:postId/reactions', reactionRouter);
 
 router.route('/')
     .get(advanceResults(Post, { path: 'blog', select: 'name' }), getPosts)
