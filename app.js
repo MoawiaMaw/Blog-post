@@ -4,6 +4,12 @@ const errorHandler = require('./middleware/error');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
+const path = require('path');
 
 // LOAD ENV VARS
 dotenv.config({ path: './config/config.env' });
@@ -18,11 +24,35 @@ const app = express();
 //bodyparser
 app.use(express.json());
 
+//cookie parser
+app.use(cookieParser());
+
+//Security middlewares
+//sanitize data (no SQL injection)
+app.use(mongoSanitize());
+
+//set security headers
+app.use(helmet());
+
+//prevent cross side scripting
+app.use(xss());
+
+//prevent http params pollution
+app.use(hpp());
+
 // enable CORS
 app.use(cors());
 
-//cookie parser
-app.use(cookieParser());
+//limit number of requests
+const limiter = rateLimit({
+    windowMs: 10 * 50 * 1000, //10mins
+    max: 100
+});
+app.use(limiter);
+//Security miidlwares
+
+//set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 //blog routes
 const blogs = require('./routes/blogs');
