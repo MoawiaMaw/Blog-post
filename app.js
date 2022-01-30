@@ -44,6 +44,10 @@ app.use('/api/comments', comments);
 const reactions = require('./routes/reactions');
 app.use('/api/reactions', reactions);
 
+//reviews routes
+const reviews = require('./routes/reviews');
+app.use('/api/reviews', reviews);
+
 
 //error handler
 app.use(errorHandler)

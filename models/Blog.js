@@ -13,6 +13,12 @@ const BlogSchema = new mongoose.Schema({
         required: [true, 'Please add a description'],
         maxlength: [500, "description can't be more than 500 characters"]
     },
+    averageRating: {
+        type: Number,
+        min: [1, 'Rating cant be less than 1'],
+        max: [10, 'Rating cant be more than 10']
+    }
+    ,
     createdAt: {
         type: Date,
         default: Date.now

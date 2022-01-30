@@ -12,11 +12,13 @@ const Blog = require('../models/Blog');
 
 //include other router resource
 const postRouter = require('./posts');
+const reviewRouter = require('./reviews');
 
 const router = express.Router();
 
 //re-route to other resource router
 router.use('/:blogId/posts', postRouter);
+router.use('/:blogId/reviews', reviewRouter);
 
 
 router.route('/')
